@@ -1,33 +1,173 @@
+# Cours Java - Les types
+
+## 1) Pourquoi les types sont importants
+Le type d'une variable definit :
+- les valeurs autorisees,
+- les operations possibles,
+- la memoire utilisee,
+- les erreurs detectables a la compilation.
+
+En Java, le typage est statique : le type est connu avant l'execution.
+
+## 2) Les types primitifs
+Java fournit 8 types primitifs :
+- `byte` (8 bits)
+- `short` (16 bits)
+- `int` (32 bits)
+- `long` (64 bits)
+- `float` (32 bits, decimal)
+- `double` (64 bits, decimal)
+- `char` (16 bits, caractere Unicode)
+- `boolean` (`true`/`false`)
+
+Exemple :
+
 ```java
-class StringAnalyzer {
-    private String text;
+int age = 21;
+long population = 8_100_000_000L;
+double prix = 19.99;
+char lettre = 'A';
+boolean actif = true;
+```
 
-    public StringAnalyzer(String text) {
-        this.text = text;
-    }
+## 3) Types references (objets)
+Tout ce qui n'est pas primitif est un type reference :
+- `String`
+- tableaux (`int[]`, `String[]`)
+- classes (`Employee`, `Door`)
+- interfaces (`List`, `Map`)
 
-    public int countVowels() {
-        int c = 0;
-        for (char ch : text.toCharArray()) {
-            if ("aeiouyAEIOUY".indexOf(ch) >= 0) c++;
-        }
-        return c;
-    }
+Exemple :
 
-    public int countDigits() {
-        int c = 0;
-        for (char ch : text.toCharArray()) {
-            if (ch >= '0' && ch <= '9') c++;
-        }
-        return c;
-    }
+```java
+String nom = "Alice";
+int[] notes = {12, 15, 18};
+List<String> tags = List.of("java", "poo");
+```
 
-    public int countUppercase() {
-        int c = 0;
-        for (char ch : text.toCharArray()) {
-            if (ch >= 'A' && ch <= 'Z') c++;
-        }
-        return c;
+Un type reference peut valoir `null` :
+
+```java
+String email = null;
+```
+
+## 4) Conversion de types
+### Conversion implicite (widening)
+Pas de perte d'information, Java accepte automatiquement :
+
+```java
+int n = 42;
+long l = n;
+double d = l;
+```
+
+### Conversion explicite (casting)
+Risque de perte d'information :
+
+```java
+double d = 9.8;
+int n = (int) d; // n vaut 9
+```
+
+## 5) Wrappers et autoboxing
+Chaque primitif a une classe wrapper :
+- `int` -> `Integer`
+- `double` -> `Double`
+- `boolean` -> `Boolean`
+
+Exemple :
+
+```java
+Integer a = 10;     // autoboxing
+int b = a;          // unboxing
+List<Integer> ids = List.of(1, 2, 3);
+```
+
+## 6) String : type reference immuable
+`String` est immuable : chaque modification cree un nouvel objet.
+
+```java
+String s = "Java";
+s = s + " POO"; // nouveau String
+```
+
+Pour construire beaucoup de texte, preferer `StringBuilder`.
+
+```java
+StringBuilder sb = new StringBuilder();
+sb.append("TP ").append("SOLID");
+String resultat = sb.toString();
+```
+
+## 7) Tableaux, List, Map
+### Tableau
+Taille fixe :
+
+```java
+int[] valeurs = {1, 2, 3};
+```
+
+### List
+Taille dynamique :
+
+```java
+List<String> noms = new ArrayList<>();
+noms.add("Alice");
+noms.add("Bob");
+```
+
+### Map
+Association cle/valeur :
+
+```java
+Map<String, Integer> scores = new HashMap<>();
+scores.put("Alice", 15);
+scores.put("Bob", 12);
+```
+
+## 8) `var` (Java 10+)
+`var` laisse le compilateur inferer le type local :
+
+```java
+var total = 100;          // int
+var message = "Bonjour";  // String
+```
+
+Bonne pratique : utiliser `var` seulement si le type reste evident.
+
+## 9) Bonnes pratiques
+- Choisir le type le plus precis possible.
+- Utiliser `int` par defaut pour les entiers courants.
+- Utiliser `BigDecimal` pour les montants financiers.
+- Eviter `null` quand possible.
+- Utiliser des generics (`List<String>`) au lieu de types bruts (`List`).
+
+## 10) Exemple complet
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class TypeExample {
+    public static void main(String[] args) {
+        int age = 21;
+        double note = 15.5;
+        boolean present = true;
+        String name = "Alice";
+
+        List<Integer> notes = new ArrayList<>();
+        notes.add(12);
+        notes.add(16);
+        notes.add((int) note); // cast explicite
+
+        System.out.println(name + " (" + age + ") present=" + present);
+        System.out.println("Notes: " + notes);
     }
 }
 ```
+
+## 11) Mini exercices
+1. Ecrire une methode `boolean isAdult(int age)`.
+2. Ecrire une methode `double average(List<Integer> values)`.
+3. Transformer une `List<String>` en `Map<String, Integer>` avec la longueur de chaque mot.
+4. Comparer `StringBuilder` et concatenation dans une boucle.
