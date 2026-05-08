@@ -1,35 +1,35 @@
-# Cours Java - Injection de dependance (DI)
+# Cours Java - Injection de dépendance (DI)
 
-## 1) Definition
-L'injection de dependance consiste a **fournir les dependances d'une classe depuis l'exterieur** au lieu de les creer avec `new` a l'interieur de la classe.
+## 1) Définition
+L'injection de dépendance consiste à **fournir les dépendances d'une classe depuis l'extérieur** au lieu de les créer avec `new` à l'intérieur de la classe.
 
-Objectif : reduire le couplage et rendre le code plus testable et evolutif.
+Objectif : réduire le couplage et rendre le code plus testable et évolutif.
 
-## 2) Couplage fort (a eviter)
+## 2) Couplage fort (à éviter)
 
 ```java
 public class OrderService {
     private final EmailService emailService = new EmailService();
 
     public void placeOrder(String customerEmail) {
-        // logique metier...
-        emailService.send(customerEmail, "Commande confirmee");
+        // logique métier...
+        emailService.send(customerEmail, "Commande confirmée");
     }
 }
 
 public class EmailService {
     public void send(String to, String message) {
-        System.out.println("Email envoye a " + to + " : " + message);
+        System.out.println("Email envoyé à " + to + " : " + message);
     }
 }
 ```
 
-Problemes :
-- `OrderService` depend directement de `EmailService` concret.
+Problèmes :
+- `OrderService` dépend directement de `EmailService` concret.
 - Difficile de remplacer par SMS, Slack, etc.
 - Difficile de tester sans envoyer de vrai message.
 
-## 3) Decoupler avec une interface
+## 3) Découpler avec une interface
 
 ```java
 public interface NotificationService {
@@ -39,21 +39,21 @@ public interface NotificationService {
 public class EmailNotificationService implements NotificationService {
     @Override
     public void send(String to, String message) {
-        System.out.println("Email envoye a " + to + " : " + message);
+        System.out.println("Email envoyé à " + to + " : " + message);
     }
 }
 
 public class SmsNotificationService implements NotificationService {
     @Override
     public void send(String to, String message) {
-        System.out.println("SMS envoye a " + to + " : " + message);
+        System.out.println("SMS envoyé à " + to + " : " + message);
     }
 }
 ```
 
-Ici, le contrat est `NotificationService`. Les implementations sont interchangeables.
+Ici, le contrat est `NotificationService`. Les implémentations sont interchangeables.
 
-## 4) Injection de dependance (constructeur)
+## 4) Injection de dépendance (constructeur)
 
 ```java
 public class OrderService {
@@ -64,13 +64,13 @@ public class OrderService {
     }
 
     public void placeOrder(String customerContact) {
-        // logique metier...
-        notificationService.send(customerContact, "Commande confirmee");
+        // logique métier...
+        notificationService.send(customerContact, "Commande confirmée");
     }
 }
 ```
 
-Creation des objets (composition root) :
+Création des objets (composition root) :
 
 ```java
 public class Main {
@@ -93,15 +93,15 @@ OrderService orderService = new OrderService(notifier);
 Aucune modification de `OrderService`.
 
 ## 5) Pourquoi c'est mieux
-- Faible couplage : dependance a une abstraction.
-- Meilleure testabilite : injection d'un fake/mocking.
-- Evolutivite : ajout d'implementations sans casser le code metier.
-- Aligne avec SOLID : OCP + DIP.
+- Faible couplage : dépendance à une abstraction.
+- Meilleure testabilité : injection d'un fake/mocking.
+- Évolutivité : ajout d'implémentations sans casser le code métier.
+- Aligné avec SOLID : OCP + DIP.
 
 ## 6) Types d'injection
-- Injection par constructeur : recommandee (dependances obligatoires).
-- Injection par setter : utile pour dependances optionnelles.
-- Injection par champ : a eviter hors framework (moins explicite).
+- Injection par constructeur : recommandée (dépendances obligatoires).
+- Injection par setter : utile pour dépendances optionnelles.
+- Injection par champ : à éviter hors framework (moins explicite).
 
 ## 7) Exemple de test simple
 
@@ -123,9 +123,9 @@ OrderService service = new OrderService(fake);
 service.placeOrder("bob@example.com");
 
 assert "bob@example.com".equals(fake.lastTo);
-assert "Commande confirmee".equals(fake.lastMessage);
+assert "Commande confirmée".equals(fake.lastMessage);
 ```
 
-## 8) Resume
-Sans DI : `OrderService` cree ses dependances -> couplage fort.
-Avec DI : dependances injectees via interface -> code flexible, testable et maintenable.
+## 8) Résumé
+Sans DI : `OrderService` crée ses dépendances -> couplage fort.
+Avec DI : dépendances injectées via interface -> code flexible, testable et maintenable.

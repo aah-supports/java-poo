@@ -1,13 +1,13 @@
 # Cours Java - Les types
 
 ## 1) Pourquoi les types sont importants
-Le type d'une variable definit :
-- les valeurs autorisees,
-- les operations possibles,
-- la memoire utilisee,
-- les erreurs detectables a la compilation.
+Le type d'une variable définit :
+- les valeurs autorisées,
+- les opérations possibles,
+- la mémoire utilisée,
+- les erreurs détectables à la compilation.
 
-En Java, le typage est statique : le type est connu avant l'execution.
+En Java, le typage est statique : le type est connu avant l'exécution.
 
 ## 2) Les types primitifs
 Java fournit 8 types primitifs :
@@ -15,9 +15,9 @@ Java fournit 8 types primitifs :
 - `short` (16 bits)
 - `int` (32 bits)
 - `long` (64 bits)
-- `float` (32 bits, decimal)
-- `double` (64 bits, decimal)
-- `char` (16 bits, caractere Unicode)
+- `float` (32 bits, décimal)
+- `double` (64 bits, décimal)
+- `char` (16 bits, caractère Unicode)
 - `boolean` (`true`/`false`)
 
 Exemple :
@@ -30,8 +30,8 @@ char lettre = 'A';
 boolean actif = true;
 ```
 
-## 3) Types references (objets)
-Tout ce qui n'est pas primitif est un type reference :
+## 3) Types références (objets)
+Tout ce qui n'est pas primitif est un type référence :
 - `String`
 - tableaux (`int[]`, `String[]`)
 - classes (`Employee`, `Door`)
@@ -45,7 +45,7 @@ int[] notes = {12, 15, 18};
 List<String> tags = List.of("java", "poo");
 ```
 
-Un type reference peut valoir `null` :
+Un type référence peut valoir `null` :
 
 ```java
 String email = null;
@@ -83,15 +83,15 @@ int b = a;          // unboxing
 List<Integer> ids = List.of(1, 2, 3);
 ```
 
-## 6) String : type reference immuable
-`String` est immuable : chaque modification cree un nouvel objet.
+## 6) String : type référence immuable
+`String` est immuable : chaque modification crée un nouvel objet.
 
 ```java
 String s = "Java";
 s = s + " POO"; // nouveau String
 ```
 
-Pour construire beaucoup de texte, preferer `StringBuilder`.
+Pour construire beaucoup de texte, préférer `StringBuilder`.
 
 ```java
 StringBuilder sb = new StringBuilder();
@@ -117,7 +117,7 @@ noms.add("Bob");
 ```
 
 ### Map
-Association cle/valeur :
+Association clé/valeur :
 
 ```java
 Map<String, Integer> scores = new HashMap<>();
@@ -126,20 +126,20 @@ scores.put("Bob", 12);
 ```
 
 ## 8) `var` (Java 10+)
-`var` laisse le compilateur inferer le type local :
+`var` laisse le compilateur inférer le type local :
 
 ```java
 var total = 100;          // int
 var message = "Bonjour";  // String
 ```
 
-Bonne pratique : utiliser `var` seulement si le type reste evident.
+Bonne pratique : utiliser `var` seulement si le type reste évident.
 
 ## 9) Bonnes pratiques
-- Choisir le type le plus precis possible.
-- Utiliser `int` par defaut pour les entiers courants.
+- Choisir le type le plus précis possible.
+- Utiliser `int` par défaut pour les entiers courants.
 - Utiliser `BigDecimal` pour les montants financiers.
-- Eviter `null` quand possible.
+- Éviter `null` quand possible.
 - Utiliser des generics (`List<String>`) au lieu de types bruts (`List`).
 
 ## 10) Exemple complet
@@ -167,7 +167,7 @@ public class TypeExample {
 ```
 
 ## 11) Mini exercices
-1. Ecrire une methode `boolean isAdult(int age)`.
-2. Ecrire une methode `double average(List<Integer> values)`.
+1. Écrire une méthode `boolean isAdult(int age)`.
+2. Écrire une méthode `double average(List<Integer> values)`.
 3. Transformer une `List<String>` en `Map<String, Integer>` avec la longueur de chaque mot.
-4. Comparer `StringBuilder` et concatenation dans une boucle.
+4. Comparer `StringBuilder` et concaténation dans une boucle.

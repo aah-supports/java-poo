@@ -76,6 +76,6 @@ Avant de coder, pose ces questions :
 
 1. Si un nouveau cas métier arrive, vais-je modifier une grosse méthode `if/else` ?
 2. Puis-je introduire une abstraction (`interface`) pour brancher de nouveaux comportements ?
-3. Est-ce que le coeur du code reste inchangé quand j'ajoute une variante ?
+3. Est-ce que le cœur du code reste inchangé quand j'ajoute une variante ?
 
 Si la réponse est oui à 2 et 3, tu es proche de OCP.

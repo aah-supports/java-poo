@@ -30,7 +30,7 @@ Implémentation :
 public class StripePaymentService implements PaymentService {
     @Override
     public boolean pay(double amount) {
-        System.out.println("Paiement Stripe: " + amount);
+        System.out.println("Paiement Stripe : " + amount);
         return true;
     }
 }
@@ -48,12 +48,41 @@ public class CheckoutService {
 
     public void checkout(double total) {
         boolean ok = paymentService.pay(total);
-        if (!ok) throw new IllegalStateException("Paiement refuse");
+        if (!ok) throw new IllegalStateException("Paiement refusé");
     }
 }
 ```
 
-## 4) Idée clé: programmer contre une interface
+## 4) Diagramme UML : interface et implémentation
+Le lien entre une interface et une classe qui l'implémente est une relation de **réalisation** (ligne pointillée avec flèche triangulaire vide vers l'interface).
+
+Illustration :
+
+![Diagramme UML interface implémentée par une classe](images/uml-interface-implementation.png)
+
+
+## 5) À quoi sert `@Override`
+`@Override` indique qu'une méthode redéfinit bien une méthode déclarée dans une interface (ou une classe parente).
+
+Pourquoi l'utiliser :
+- le compilateur vérifie la signature exacte,
+- évite les erreurs de frappe ou de type (`Double` au lieu de `double`),
+- rend l'intention claire pour la lecture.
+
+Exemple :
+
+```java
+public class StripePaymentService implements PaymentService {
+    @Override
+    public boolean pay(double amount) {
+        return true;
+    }
+}
+```
+
+`@Override` n'est pas obligatoire, mais c'est une bonne pratique à appliquer systématiquement.
+
+## 6) Idée clé : programmer contre une interface
 Mauvaise approche :
 
 ```java
@@ -68,13 +97,13 @@ PaymentService payment = new StripePaymentService();
 
 Le code appelant dépend du **contrat** `PaymentService` et non du détail `StripePaymentService`.
 
-## 5) Plusieurs implémentations
+## 7) Plusieurs implémentations
 
 ```java
 public class PaypalPaymentService implements PaymentService {
     @Override
     public boolean pay(double amount) {
-        System.out.println("Paiement PayPal: " + amount);
+        System.out.println("Paiement PayPal : " + amount);
         return true;
     }
 }
@@ -83,7 +112,7 @@ public class PaypalPaymentService implements PaymentService {
 Aucun changement dans `CheckoutService`.
 On remplace juste l'objet injecté.
 
-## 6) Interface vs classe abstraite
+## 8) Interface vs classe abstraite
 Interface :
 
 - définit principalement un contrat,
@@ -96,21 +125,21 @@ Classe abstraite :
 - peut contenir de l'état (attributs),
 - ne s'hérite qu'une seule fois (`extends`).
 
-## 7) Bonnes pratiques
+## 9) Bonnes pratiques
 
 - nommer les interfaces par rôle (`PaymentService`, `Repository`, `Notifier`),
 - garder des interfaces petites et cohérentes,
 - éviter les interfaces “fourre-tout”,
 - injecter les dépendances via le constructeur.
 
-## 8) Erreurs fréquentes
+## 10) Erreurs fréquentes
 
 - créer une interface sans besoin de variation,
 - multiplier les méthodes non liées dans la même interface,
 - typer partout avec des classes concrètes,
 - confondre interface et classe utilitaire statique.
 
-## 9) Mini exercice
+## 11) Exercice
 Objectif : rendre un système de notifications extensible.
 
 1. Créer `NotificationService` avec `void send(String message)`.
@@ -119,7 +148,7 @@ Objectif : rendre un système de notifications extensible.
 4. Créer `AlertManager` qui dépend de `NotificationService`.
 5. Tester avec les deux implémentations sans modifier `AlertManager`.
 
-## 10) Résumé
+## 12) Résumé
 Une interface est un **contrat de comportement**.
 Elle permet un code plus flexible, testable et évolutif.
 La règle pratique : dépendre d'une interface quand plusieurs implémentations sont possibles aujourd'hui ou demain.

@@ -1,4 +1,7 @@
-# Supports Java POO - Ordre recommande
+# Supports Java POO - Ordre recommandé
+
+Syllabus :
+- `SYLLABUS.md`
 
 1. `00-types.md`
 2. `01-interfaces.md`
