@@ -34,7 +34,7 @@
 6. Cas pratique accès : `05-cas-pratique-acces.md`
 7. TP fil rouge SOLID : `06-TP-SOLID.md`
 
-## 6) Déroulé proposé (8 séances)
+## 6) Déroulé proposé 
 ### Séance 1 - Types et modélisation de base
 - Primitifs, références, wrappers, conversions
 - Exercices courts de manipulation de types
