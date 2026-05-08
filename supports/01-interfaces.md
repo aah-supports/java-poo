@@ -139,14 +139,69 @@ Classe abstraite :
 - typer partout avec des classes concrètes,
 - confondre interface et classe utilitaire statique.
 
-## 11) Exercice
-Objectif : rendre un système de notifications extensible.
+## 11) Exercices : application de paiement
+Objectif : utiliser une interface pour découpler le processus de commande du moyen de paiement.
 
-1. Créer `NotificationService` avec `void send(String message)`.
-2. Implémenter `EmailNotificationService`.
-3. Implémenter `SmsNotificationService`.
-4. Créer `AlertManager` qui dépend de `NotificationService`.
-5. Tester avec les deux implémentations sans modifier `AlertManager`.
+### Exercice 1 - Créer le contrat
+Créer une interface `PaymentMethod` avec :
+
+```java
+boolean pay(double amount);
+```
+
+### Exercice 2 - Ajouter deux implémentations
+Créer deux classes qui implémentent l'interface :
+- `CreditCardPayment`
+- `PaypalPayment`
+
+Chaque classe doit :
+- implémenter `pay(double amount)` avec `@Override`,
+- afficher le message correspondant,
+- retourner `true`.
+
+### Exercice 3 - Brancher la commande sur l'interface
+Créer une classe `OrderService` qui dépend de `PaymentMethod` via le constructeur :
+
+```java
+public OrderService(PaymentMethod paymentMethod)
+```
+
+Créer la méthode :
+
+```java
+public void checkout(double amount)
+```
+
+Comportement attendu :
+- appeler `paymentMethod.pay(amount)`,
+- afficher `Commande validée` si `true`,
+- afficher `Paiement refusé` sinon.
+
+### Exercice 4 - Scénario complet dans `Main`
+Dans `main`, exécuter :
+1. une commande avec `CreditCardPayment` pour `49.99`,
+2. afficher `-----`,
+3. une commande avec `PaypalPayment` pour `79.90`.
+
+### Résultat attendu
+
+```txt
+Paiement de 49.99€ par carte bancaire
+Commande validée
+-----
+Paiement de 79.9€ avec PayPal
+Commande validée
+```
+
+### Test local
+
+```bash
+javac Main.java
+java Main
+```
+
+### Exercice bonus
+Ajouter `StripePayment` sans modifier `OrderService`.
 
 ## 12) Résumé
 Une interface est un **contrat de comportement**.
