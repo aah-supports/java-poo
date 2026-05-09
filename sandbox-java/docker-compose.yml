@@ -7,6 +7,5 @@ services:
     working_dir: /workspace
     volumes:
       - ./src:/workspace/src
-      - ./out:/workspace/out
     stdin_open: true
     tty: true

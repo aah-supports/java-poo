@@ -8,19 +8,19 @@ fi
 
 case "$1" in
   build)
-    docker compose build
+    DOCKER_UID="$(id -u)" DOCKER_GID="$(id -g)" docker compose build
     ;;
   shell)
-    docker compose run --rm java
+    DOCKER_UID="$(id -u)" DOCKER_GID="$(id -g)" docker compose run --rm java
     ;;
   compile)
-    docker compose run --rm java sh -lc "mkdir -p out && javac -d out \\$(find src -name '*.java')"
+    DOCKER_UID="$(id -u)" DOCKER_GID="$(id -g)" docker compose run --rm java sh -lc "rm -rf /tmp/out && mkdir -p /tmp/out && javac -d /tmp/out \$(find src -name '*.java')"
     ;;
   run)
-    docker compose run --rm java sh -lc "mkdir -p out && javac -d out \\$(find src -name '*.java') && java -cp out Main"
+    DOCKER_UID="$(id -u)" DOCKER_GID="$(id -g)" docker compose run --rm java sh -lc "rm -rf /tmp/out && mkdir -p /tmp/out && javac -d /tmp/out \$(find src -name '*.java') && java -cp /tmp/out Main"
     ;;
   clean)
-    rm -rf out/*
+    DOCKER_UID="$(id -u)" DOCKER_GID="$(id -g)" docker compose run --rm java sh -lc "rm -rf /tmp/out"
     ;;
   *)
     echo "Unknown command: $1"
